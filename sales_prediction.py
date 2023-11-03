@@ -28,4 +28,19 @@ df = user_input_features()
 st.subheader("User Input Parameters")
 st.write(df)
 
+#scale features
+scaled_features = scaler_features.transform(df)
+dfscaled_features = pd.DataFrame(scaled_features)
+dfscaled_features.columns = ['TV','Radio','Newspaper']
+
+#Prediction
+prediction = loaded_model.predict(dfscaled_features)
+
+#unscale
+df_prediction = pd.DataFrame(prediction)
+unscale_prediction = scaler_sales.inverse_transform(df_prediction)
+
+#Display prediction result
+st.subheader("Sales Prediction")
+st.write(f"{unscale_prediction[0][0]:.2f}")
 
